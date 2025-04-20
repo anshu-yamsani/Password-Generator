@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Password Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id="box">
+    <h1>Password Generator</h1>
+    <div id="container">
+      <form action="/generate" method="POST">
+        <label for="name-input">Enter Name:</label>
+        <input type="text" id="name-input" name="name-input" required>
+
+        <label for="length">Password Length:</label>
+        <input type="number" id="length" name="length" min="6" max="20" value="12">
+
+        <label for="symbols">Include Symbols:</label>
+        <input type="checkbox" id="symbols" name="symbols" checked>
+
+        <br><br>
+        <button type="submit">Generate Password</button>
+      </form>
+
+      {% if generated_password %}
+        <div id="password-result">
+          <p id="generated-password">{{ generated_password }}</p>
+          <button id="copy" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard() {
+      const passwordText = document.getElementById("generated-password").innerText;
+      navigator.clipboard.writeText(passwordText).then(() => {
+        alert("Password copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
